@@ -10,6 +10,9 @@ public class Player extends Entity {
 		 this.name = name;
 		 this.setSprite('P');
 	}
+	
+	
+
 
 	public String getName() {
 		return name;
