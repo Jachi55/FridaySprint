@@ -12,6 +12,9 @@ public class Player {
 		 this.position = position;
 		 this.setSprite('P');
 	}
+	
+	
+
 
 	public String getName() {
 		return name;
