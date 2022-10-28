@@ -37,6 +37,7 @@ public class App {
 	  return coords;
   }
   
+  // Calculates Distance
   public static double getDistance(Player p, Treasure t) {
 	  
 	  int[] playerPosition = p.getPosition();
