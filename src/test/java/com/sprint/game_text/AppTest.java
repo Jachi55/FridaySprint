@@ -8,6 +8,6 @@ public class AppTest {
     
   @Test
   public void shouldAnswerWithTrue() {
-    assertTrue(true);
+    assertEquals(20,20);
   }
 }
