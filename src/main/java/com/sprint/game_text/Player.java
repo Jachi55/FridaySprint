@@ -19,7 +19,6 @@ public class Player {
 		return name;
 	}
 
-
 	public void setName(String name) {
 		this.name = name;
 	}
@@ -32,11 +31,9 @@ public class Player {
 		this.position = new_position;
 	}
 
-
 	public char getSprite() {
 		return sprite;
 	}
-
 
 	public void setSprite(char sprite) {
 		this.sprite = sprite;
