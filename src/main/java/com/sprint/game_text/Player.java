@@ -14,6 +14,32 @@ public class Player {
 	}
 	
 	
+	public void movePlayer(char dir) {
+		char direct = Character.toLowerCase(dir);
+	
+		switch (direct){
+			
+			case 'w':
+				this.position[1]++;
+				break;
+				
+			case 's':
+				this.position[1]--;
+				break;
+				
+			case 'a':
+				this.position[0]--;
+				break;
+				
+			case 'd':
+				this.position[0]++;
+				break;
+				
+				
+		}
+	}
+	
+	
 
 
 	public String getName() {
