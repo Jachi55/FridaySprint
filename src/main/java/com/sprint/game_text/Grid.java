@@ -36,7 +36,7 @@ public class Grid {
 	
     public void show() {
         // Clear screen
-        System.out.print("\033[H\033[2J");  
+        System.out.print("\033\033");  
         System.out.flush(); 
 
         // Assemble single output string

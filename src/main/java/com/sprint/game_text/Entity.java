@@ -21,8 +21,7 @@ public class Entity {
 	public char getSprite() {
 		return sprite;
 	}
-	
-	
+
 
 	public void setSprite(char sprite) {
 		this.sprite = sprite;

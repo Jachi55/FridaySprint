@@ -6,6 +6,8 @@ public class App {
 	private double distanceFromTreasure = 0;
 	
   public static void main(String[] args) {
+	  
+	//======================== GAME SETUP ========================
     Scanner scanner = new Scanner (System.in);
 
     
@@ -30,7 +32,6 @@ public class App {
     }
     
     Treasure treasure = new Treasure (treasureLocation);
-    
     
     gameGrid.show();
     
