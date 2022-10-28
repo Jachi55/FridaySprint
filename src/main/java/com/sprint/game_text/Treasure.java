@@ -6,5 +6,8 @@ public class Treasure extends Entity {
 		super(position);
 		this.setSprite('T');
 	}
+	
+	
+	
 
 }
