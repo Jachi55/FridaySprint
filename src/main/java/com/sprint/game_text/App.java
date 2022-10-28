@@ -21,8 +21,16 @@ public class App {
     System.out.println("What is your name?");
     String name = scanner.next() ;
     
-    int [] location = generateCoordinates(rows, columns);
-    Player player = new Player(name, location);
+    
+    int [] playerLocation = generateCoordinates(rows, columns);
+    Player player = new Player(name, playerLocation);
+    int treasureLocation[] = generateCoordinates(rows,columns);
+    while (treasureLocation == playerLocation) {
+    	treasureLocation = generateCoordinates(rows,columns);
+    }
+    
+    Treasure treasure = new Treasure (treasureLocation);
+    
     
     gameGrid.show();
     
@@ -38,12 +46,12 @@ public class App {
   }
   
   // Calculates Distance
-  public static double getDistance(Player p, Treasure t) {
+  public static double getDistance(Entity e1, Entity e2) {
 	  
-	  int[] playerPosition = p.getPosition();
-	  int[] treasurePosition = t.getTreasurePosition();
+	  int[] e1Position = e1.getPosition();
+	  int[] e2Position = e2.getPosition();
 	  
-	  int[] distanceVector = {playerPosition[0]-treasurePosition[0], playerPosition[0]-treasurePosition[0]};
+	  int[] distanceVector = {e1Position[0]-e2Position[0], e1Position[0]-e2Position[0]};
 	  double absDistance = Math.sqrt( ( distanceVector[0] ^ 2  ) + ( distanceVector[0] ^ 2 ) );
 	  
 	  return absDistance;
