@@ -8,7 +8,8 @@ import org.junit.jupiter.api.Test;
 @DisplayName("Player Tests")
 class PlayerTest {
 	
-	private Player testPlayer = new Player("testPlayer",2,3);
+	int[] init_pos = {0,0};
+	private Player testPlayer = new Player("testPlayer",init_pos);
 
 	@Test
 	@DisplayName("Player initialisation")
