@@ -3,7 +3,7 @@ package com.sprint.game_text;
 import java.util.Scanner;
 
 public class Player {
-	private int[] position;
+	private int[] position = {0,0};
 	private String name;
 	private char sprite;
 	Scanner input = new Scanner(System.in);
