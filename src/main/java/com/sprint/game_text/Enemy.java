@@ -1,12 +1,12 @@
 package com.sprint.game_text;
 
-public class Treasure extends Entity {
-
+public class Enemy extends Entity{
+	
 	protected static int instanceCounter = 0;
 
-	public Treasure(int[] position) {
+	public Enemy(int[] position) {
 		super(position);
-		this.setSprite('T');
+		this.setSprite('E');
 		instanceCounter++;
 	}
 
