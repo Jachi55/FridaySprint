@@ -16,6 +16,7 @@ public class App {
     Grid gameGrid = new Grid(rows,columns);
     System.out.println("What is your name?");
     String name = scanner.next() ;
+    
     int [] location = generateCoordinates(rows, columns);
     Player player = new Player(name, location);
     

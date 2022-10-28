@@ -1,18 +1,42 @@
 package com.sprint.game_text;
 
-import java.util.Scanner;
 
 public class Player {
-	private int [] location;
+
+	private int[] position;
 	private String name;
-	 Scanner input = new Scanner(System.in);
-	 
-	 
-	 public Player (String name, int[] location) {
-		 
-		 this.name = name;
-		 this.location = location;
-	 }
+	private char sprite;
+
+	public Player (String name, int [] position) {
+		 this.setName(name);
+		 this.position = position;
+		 this.setSprite('P');
+	}
+
+	public String getName() {
+		return name;
+	}
+
+
+	public void setName(String name) {
+		this.name = name;
+	}
 	
+	public int[] getPosition() {
+		return this.position;
+	}
+	
+	public void setPosition(int[] new_position) {
+		this.position = new_position;
+	}
+
+
+	public char getSprite() {
+		return sprite;
+	}
+
+	public void setSprite(char sprite) {
+		this.sprite = sprite;
+	}
 
 }
