@@ -3,10 +3,13 @@ package com.sprint.game_text;
 public class Entity {
 
 	protected int[] position;
+	protected int[] prevPosition;
 	private char sprite;
 
 	public Entity(int[] position) {
 		this.position = position;
+		prevPosition = this.position.clone();
+		
 	}
 
 	public int[] getPosition() {
@@ -25,4 +28,12 @@ public class Entity {
 		this.sprite = sprite;
 	}
 
+	public int[] getPrevPosition() {
+		return prevPosition;
+	}
+
+	public void setPrevPosition(int[] prevPosition) {
+		this.prevPosition = prevPosition;
+	}
+	
 }
