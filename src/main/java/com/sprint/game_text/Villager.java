@@ -3,14 +3,10 @@ package com.sprint.game_text;
 public class Villager extends Entity{
 	
 	
-	
-	
-	
 	public Villager(int[] position) {
 		super(position);
 		this.setSprite('V');
 	}
-	
 	
 	
 	public void randomMove(Grid g) {
