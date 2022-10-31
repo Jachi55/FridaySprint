@@ -1,8 +1,9 @@
 package com.sprint.game_text;
 
-public class Enemy extends Entity{
+public abstract class Enemy extends Entity{
 	
 	protected static int instanceCounter = 0;
+	protected String race;
 
 	public Enemy(int[] position) {
 		super(position);
