@@ -16,6 +16,7 @@ class PlayerTest {
 	void playerInitTest() {
 		assertEquals("testPlayer", this.testPlayer.getName());
 		int[] pos = {2,3};
+		testPlayer.setPosition(pos);
 		assertEquals(pos[0], this.testPlayer.getPosition()[0]);
 		assertEquals(pos[1], this.testPlayer.getPosition()[1]);
 	}
