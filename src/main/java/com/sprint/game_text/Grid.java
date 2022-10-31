@@ -54,7 +54,7 @@ public class Grid {
         // Loop through and add each tile to the string
         for (int row = 0; row < this.rows; row++) {
             for (int col = 0; col < this.columns; col++) {
-                out += this.grid[row][col];
+                out += this.grid[row][col] + " ";
             }
             out += "\n";
         }
