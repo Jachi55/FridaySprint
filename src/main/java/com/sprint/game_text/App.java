@@ -8,7 +8,7 @@ public class App {
 
 	public static void main(String[] args) {
 
-		// ======================== GAME SETUP ========================
+		// ======================== GAME SETUP ======================== //
 		Scanner scanner = new Scanner(System.in);
 		char move;
 		int noOfTreasure;
@@ -51,9 +51,9 @@ public class App {
 	gameGrid.show();
 
 	int[] pos;
-	int d = 100;
+	int d;
 
-	// GAME LOOP
+	                // ================================ GAME LOOP ========================================= //
 
 	while(true)
 	{
@@ -67,8 +67,9 @@ public class App {
 					System.out.println("Congratulations you have found the treasure! There are " + treasure.size()
 							+ " pieces left on the map!");
 					treasure.remove(t);
+					break;
 				} else {
-					System.out.println("Congratulations you have found the treasure! YOU WIN!");
+					System.out.println("Congratulations you have found all the treasure! YOU WIN!");
 					win = true;
 					break;
 				}
@@ -80,7 +81,8 @@ public class App {
 			break;
 		}
 
-
+		
+		d = (int)Math.sqrt((rows^2)+(columns^2));
 		for (Treasure t : treasure) {
 			d = Math.min(getDistance(player, t), d);
 		}
