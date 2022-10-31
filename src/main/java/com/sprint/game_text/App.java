@@ -52,8 +52,8 @@ public class App {
 	  int[] e1Position = e1.getPosition();
 	  int[] e2Position = e2.getPosition();
 	  
-	  int[] distanceVector = {e1Position[0]-e2Position[0], e1Position[0]-e2Position[0]};
-	  double absDistance = Math.sqrt( ( distanceVector[0] ^ 2  ) + ( distanceVector[0] ^ 2 ) );
+	  double[] distanceVector = {e1Position[0]-e2Position[0], e1Position[0]-e2Position[0]};
+	  double absDistance = Math.sqrt( ( distanceVector[0] * distanceVector[0] ) + ( distanceVector[1] * distanceVector[1] ) );
 	  
 	  return absDistance;
   }
