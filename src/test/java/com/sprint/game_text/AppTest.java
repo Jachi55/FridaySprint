@@ -16,7 +16,10 @@ public class AppTest {
     @Test
     @DisplayName("Distance Calculations")
     public void distanceCalculations() {
-    	double dist = Math.sqrt( ( (pos1[0]-pos2[0])^2 ) + ( (pos1[1]-pos2[1])^2 ) );
+    	System.out.println("Pos1: " + pos1[0] + "," + pos1[1]);
+    	System.out.println("Pos2: " + pos2[0] + "," + pos2[1]);
+    	double[] distVec = {pos1[0]-pos2[0], pos1[1]-pos2[1]};
+    	double dist = Math.sqrt( (distVec[0] * distVec[0]) + (distVec[1] * distVec[1]) );
     	assertEquals(dist, App.getDistance(p1, t1));
     }
 }
