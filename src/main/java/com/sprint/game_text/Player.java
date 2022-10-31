@@ -3,12 +3,20 @@ package com.sprint.game_text;
 
 public class Player extends Entity {
 
+	private Entity race;
 	private String name;
 
 	public Player (String name, int [] position) {
 		 super(position);
 		 this.name = name;
 		 this.setSprite('P');
+	}
+	
+	public Player (String name, int[] position, Entity race) {
+		super(position);
+		this.name = name;
+		this.race = race;
+		this.setSprite(race.getSprite());
 	}
 	
 	
