@@ -63,4 +63,13 @@ public class Grid {
         System.out.print(out);
         
     }
+    
+    
+    public int getRows() {
+    	return rows;
+    }
+    
+    public int getColumns() {
+    	return columns;
+    }
 }
