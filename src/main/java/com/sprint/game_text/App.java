@@ -66,12 +66,12 @@ public class App {
 				score += t.getValue();
 				if (treasure.size() != 1) {
 					treasure.remove(t);
-					System.out.println("Congratulations you have found the treasure! There are " + treasure.size()
+					System.out.println("Congratulations, you have found the treasure! There are " + treasure.size()
 							+ " pieces left on the map!");
 					treasure.remove(t);
 					break;
 				} else {
-					System.out.println("Congratulations you have found all the treasure! YOU WIN!");
+					System.out.println("Congratulations " + player.getName() + ", you have found all the treasure! YOU WIN!");
 					System.out.println("Your score is: " + score);
 					win = true;
 					break;
