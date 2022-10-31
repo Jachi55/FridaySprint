@@ -278,6 +278,8 @@ public class App {
 		for (Treasure t : treasure) {
 
 			if (Arrays.equals(player.getPosition(), t.getPosition())) {
+				
+				player.setScore(player.getScore() + t.value);
 
 				if (treasure.size() != 1) {
 					treasure.remove(t);
@@ -286,6 +288,7 @@ public class App {
 					break;
 				} else {
 					System.out.println("Congratulations you have found all the treasure! YOU WIN!");
+					System.out.println(player.getName() + "'s score is: " + player.getScore());
 					player.setWin(true);
 					break;
 				}
@@ -311,6 +314,8 @@ public class App {
 		for (Villager v : villager) {
 
 			if (Arrays.equals(player.getPosition(), v.getPosition())) {
+				
+				player.setScore(player.getScore() + v.value);
 
 				System.out.println("You have saved a villager!!");
 				villager.remove(v);

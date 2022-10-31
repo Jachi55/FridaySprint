@@ -6,7 +6,7 @@ public class Villager extends Entity{
 	public Villager(int[] position) {
 		super(position);
 		this.setSprite('V');
-
+		this.value = 20;
 	}
 	
 	
