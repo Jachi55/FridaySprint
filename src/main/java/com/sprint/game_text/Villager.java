@@ -4,9 +4,13 @@ public class Villager extends Entity{
 	private String name;
 	private int ScoreValue = 10;
 	
-	public Villager(int[] position, String name) {
+	
+	
+	
+	
+	public Villager(int[] position) {
 		super(position);
-		this.name = name;
+		this.setSprite('V');
 	}
 	
 	public String getName() {

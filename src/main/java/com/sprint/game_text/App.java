@@ -6,15 +6,19 @@ import java.util.Scanner;
 
 public class App {
 
+	private static ArrayList<Enemy> enemy = new ArrayList<Enemy>();
+
 	public static void main(String[] args) {
 
 		// ======================== GAME SETUP ======================== //
 		Scanner scanner = new Scanner(System.in);
 		char move;
 		int noOfTreasure;
+		int noOfEnemies;
+		int noOfVillagers;
+		ArrayList<Villager> villager = new ArrayList<Villager>();
+		//ArrayList<Enemy> enemy = new ArrayList<Enemy>();
 		ArrayList<Treasure> treasure = new ArrayList<Treasure>();
-		int[] treasureLocation;
-		boolean win = false;
 
 		System.out.println("Welcome to Gridlock!!");
 		System.out.println("You can make this grid as big as you like");
@@ -27,6 +31,10 @@ public class App {
 
 		System.out.println("How many pieces of treasure would you like to find?");
 		noOfTreasure = scanner.nextInt();
+		System.out.println("How many enemies would you like to spawn?");
+		noOfEnemies = scanner.nextInt();
+		System.out.println("How many villagers would you like to spawn?");
+		noOfVillagers = scanner.nextInt();
 
 		System.out.println("What is your name?");
 		String name = scanner.next();
@@ -34,84 +42,77 @@ public class App {
 		int[] playerLocation = generateCoordinates(rows, columns);
 		Player player = new Player(name, playerLocation);
 
-		int i = 0;
-		while (i < noOfTreasure) {
-			treasureLocation = generateCoordinates(rows, columns);
+		// Spawn Objects
 
-				while (Arrays.equals(playerLocation, treasureLocation)) {
-					treasureLocation = generateCoordinates(rows, columns);
-				}
-			treasure.add(new Treasure (treasureLocation));
-			gameGrid.updateTile(treasure.get(i).getPosition(), treasure.get(i));
-			i++;
-		}
+		spawnTreasure(noOfTreasure, playerLocation, treasure, gameGrid);
+		spawnVillager(noOfVillagers, playerLocation, villager, gameGrid);
+		spawnEnemy(noOfEnemies, playerLocation, enemy, gameGrid);
 
-	gameGrid.updateTile(player.getPosition(),player);
+		gameGrid.updateTile(player.getPosition(), player);
 
-	gameGrid.show();
+		gameGrid.show();
 
-	int[] pos;
-	int d;
+		int[] pos;
+		int d;
 
-	                // ================================ GAME LOOP ========================================= //
+		// ======================== GAME LOOP ======================== //
 
-	while(true)
-	{
+		while (true) {
 
-		for (Treasure t : treasure) {
+			
+			enemyCollide(enemy,player);
+			villagerCollide(villager,player);
+			treasureCollide(treasure,player);
+			
+			if (player.isWin() || !player.isAlive()) {
+				break;
+			}
 
-			if (Arrays.equals(player.getPosition(), t.getPosition())) {
+			d = (int) Math.sqrt((rows ^ 2) + (columns ^ 2));
+			for (Treasure t : treasure) {
+				d = Math.min(getDistance(player, t), d);
+			}
 
-				if (treasure.size() != 1) {
-					treasure.remove(t);
-					System.out.println("Congratulations you have found the treasure! There are " + treasure.size()
-							+ " pieces left on the map!");
-					treasure.remove(t);
-					break;
-				} else {
-					System.out.println("Congratulations you have found all the treasure! YOU WIN!");
-					win = true;
-					break;
-				}
+			System.out.println("You are " + d + "m away from the closest Treasure");
+			System.out.println("\n Use 'wasd' to move!");
+			move = scanner.next().charAt(0);
+			pos = player.getPosition();
+
+			// Boundary Control
+
+			if ((pos[1] == columns - 1 && move == 'd') || pos[1] <= 0 && move == 'a'
+					|| pos[0] == rows - 1 && move == 's' || pos[0] <= 0 && move == 'w') {
+
+				System.out.println("Out of Bounds!!");
+			}
+
+			else {
+
+				player.movePlayer(move);
+				
+
+				updateTreasureTile(treasure,gameGrid);
+				updateEnemyTile(enemy, gameGrid);
+				updateVillagerTile(villager, gameGrid);
+				gameGrid.updateTile(player.getPosition(), player);
+				
+
+				gameGrid.show();
+
 			}
 		}
-		
 
-		if (win == true) {
-			break;
-		}
-
-		
-		d = (int)Math.sqrt((rows^2)+(columns^2));
-		for (Treasure t : treasure) {
-			d = Math.min(getDistance(player, t), d);
-		}
-
-		System.out.println("You are " + d + "m away from the closest Treasure");
-		System.out.println("\n Use 'wsad' to move!");
-		move = scanner.next().charAt(0);
-		pos = player.getPosition();
-
-		// Boundary Control
-
-		if ((pos[1] == columns - 1 && move == 'd') || pos[1] <= 0 && move == 'a' || pos[0] == rows - 1 && move == 's'
-				|| pos[0] <= 0 && move == 'w') {
-
-			System.out.println("Out of Bounds!!");
-		}
-
-		else {
-
-			player.movePlayer(move);
-			gameGrid.updateTile(player.getPosition(), player);
-			gameGrid.show();
-
-		}
-	}
-
-	scanner.close();
+		scanner.close();
 
 	}
+	
+	
+	
+	// PUBLIC FUNCTIONS
+	
+	
+	
+	
 
 	public static int[] generateCoordinates(int max_x, int max_y) {
 		double x = Math.random();
@@ -136,4 +137,118 @@ public class App {
 
 		return (int) absDistance;
 	}
+
+// Spawn Objects
+
+	public static void spawnEnemy(int noOfObjects, int[] playerLocation, ArrayList<Enemy> e, Grid grid) {
+		int i = 0;
+		int[] location;
+		while (i < noOfObjects) {
+			location = generateCoordinates(grid.getRows(), grid.getColumns());
+
+			while (Arrays.equals(playerLocation, location)) {
+				location = generateCoordinates(grid.getRows(), grid.getColumns());
+			}
+			e.add(new Enemy(location));
+			grid.updateTile(e.get(i).getPosition(), e.get(i));
+			i++;
+		}
+	}
+
+	public static void spawnTreasure(int noOfObjects, int[] playerLocation, ArrayList<Treasure> e, Grid grid) {
+		int i = 0;
+		int[] location;
+		while (i < noOfObjects) {
+			location = generateCoordinates(grid.getRows(), grid.getColumns());
+
+			while (Arrays.equals(playerLocation, location)) {
+				location = generateCoordinates(grid.getRows(), grid.getColumns());
+			}
+			e.add(new Treasure(location));
+			grid.updateTile(e.get(i).getPosition(), e.get(i));
+			i++;
+		}
+	}
+
+	public static void spawnVillager(int noOfObjects, int[] playerLocation, ArrayList<Villager> e, Grid grid) {
+		int i = 0;
+		int[] location;
+		while (i < noOfObjects) {
+			location = generateCoordinates(grid.getRows(), grid.getColumns());
+
+			while (Arrays.equals(playerLocation, location)) {
+				location = generateCoordinates(grid.getRows(), grid.getColumns());
+			}
+			e.add(new Villager(location));
+			grid.updateTile(e.get(i).getPosition(), e.get(i));
+			i++;
+		}
+	}
+	
+	// Check Player Collision
+	
+	public static void treasureCollide (ArrayList <Treasure> treasure, Player player) {
+		for (Treasure t : treasure) {
+
+			if (Arrays.equals(player.getPosition(), t.getPosition())) {
+
+				if (treasure.size() != 1) {
+					treasure.remove(t);
+					System.out.println("Congratulations you have found the treasure! There are " + treasure.size()
+							+ " pieces left on the map!");
+					break;
+				} else {
+					System.out.println("Congratulations you have found all the treasure! YOU WIN!");
+					player.setWin(true);
+					break;
+				}
+			}
+		}
+	}
+	
+	public static void enemyCollide (ArrayList <Enemy> enemy, Player player) {
+		for (Enemy e : enemy) {
+
+			if (Arrays.equals(player.getPosition(), e.getPosition())) {
+				
+				System.out.println("An Enemy has caught you!! You Lose!!");
+				
+				player.setAlive(false);
+				break;
+
+			}
+		}
+	}
+	
+	public static void villagerCollide (ArrayList <Villager> villager, Player player) {
+		for (Villager v : villager) {
+
+			if (Arrays.equals(player.getPosition(), v.getPosition())) {
+				
+				System.out.println("You have saved a villager!!");
+				villager.remove(v);
+				break;
+
+			}
+		}
+	}
+	
+	public static void updateTreasureTile (ArrayList <Treasure> treasure, Grid grid) {
+		for (Treasure t : treasure) {
+			grid.updateTile(t.getPosition(), t);
+		}
+	}
+	public static void updateEnemyTile (ArrayList <Enemy> enemy, Grid grid) {
+		for (Enemy e : enemy) {
+			grid.updateTile(e.getPosition(), e);
+		}
+	}
+	public static void updateVillagerTile (ArrayList <Villager> villager, Grid grid) {
+		for (Villager v : villager) {
+			grid.updateTile(v.getPosition(), v);
+		}
+	}
+
+
+
 }

@@ -2,15 +2,13 @@ package com.sprint.game_text;
 
 import java.util.Random;
 
-public abstract class Enemy extends Entity {
+public class Enemy extends Entity {
 
-	protected static int instanceCounter = 0;
 	protected String race;
 
 	public Enemy(int[] position) {
 		super(position);
 		this.setSprite('E');
-		instanceCounter++;
 	}
 
 	public void enemyMove(Grid grid) {

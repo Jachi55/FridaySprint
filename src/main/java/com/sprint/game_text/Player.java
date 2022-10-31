@@ -4,10 +4,14 @@ package com.sprint.game_text;
 public class Player extends Entity {
 
 	private String name;
+	private boolean isAlive;
+	private boolean win;
 
 	public Player (String name, int [] position) {
 		 super(position);
 		 this.name = name;
+		 setAlive(true);
+		 setWin(false);
 		 this.setSprite('P');
 	}
 	
@@ -48,6 +52,26 @@ public class Player extends Entity {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+
+	public boolean isAlive() {
+		return isAlive;
+	}
+
+
+	public void setAlive(boolean isAlive) {
+		this.isAlive = isAlive;
+	}
+
+
+	public boolean isWin() {
+		return win;
+	}
+
+
+	public void setWin(boolean win) {
+		this.win = win;
 	}
 
 }
