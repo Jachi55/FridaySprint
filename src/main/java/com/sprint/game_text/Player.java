@@ -3,6 +3,7 @@ package com.sprint.game_text;
 
 public class Player extends Entity {
 
+	private int playerScore;
 	private Entity race;
 	private String name;
 	private boolean isAlive;
@@ -82,4 +83,11 @@ public class Player extends Entity {
 		this.win = win;
 	}
 
+	public int getScore() {
+		return playerScore;
+	}
+	
+	public void setScore(int newScore) {
+		this.playerScore = newScore;
+	}
 }
