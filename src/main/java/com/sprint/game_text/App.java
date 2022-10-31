@@ -8,7 +8,7 @@ public class App {
   public static void main(String[] args) {
     Scanner scanner = new Scanner (System.in);
     char move;
-   // double distanceFromTreasure;
+    double distanceFromTreasure;
 
     
     System.out.println("Welcome to Gridlock!!");
