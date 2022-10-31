@@ -21,6 +21,7 @@ public class Villager extends Entity{
 		return this.ScoreValue;
 	}
 	
+	// MOVING TO APP.JAVA
 	public void randomMove(Grid g) {
 		// Generate random position
 		int direction = (int) Math.random(); // Picks x or y
