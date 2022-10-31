@@ -67,8 +67,6 @@ public class App {
     	gameGrid.show();
 
     	
-    	
-    	
     }
     }
     
