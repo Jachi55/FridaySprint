@@ -10,7 +10,7 @@ public class App {
 	//======================== GAME SETUP ========================
     Scanner scanner = new Scanner (System.in);
     char move;
-    double distanceFromTreasure;
+    int distanceFromTreasure;
 
     
     System.out.println("Welcome to Gridlock!!");
@@ -54,7 +54,7 @@ public class App {
     		
     	}
     	distanceFromTreasure = getDistance(player,treasure);
-    	System.out.println("You are " + distanceFromTreasure + " steps away from the Treasure" );
+    	System.out.println("You are " + distanceFromTreasure + "m away from the Treasure" );
     	System.out.println("\n Use 'wsad' to move!");
     	move = scanner.next().charAt(0);
     	pos = player.getPosition();
@@ -93,14 +93,14 @@ public class App {
   }
   
   // Calculates Distance
-  public static double getDistance(Entity e1, Entity e2) {
+  public static int getDistance(Entity e1, Entity e2) {
 	  
 	  int[] e1Position = e1.getPosition();
 	  int[] e2Position = e2.getPosition();
 	  
-	  double[] distanceVector = {e1Position[0]-e2Position[0], e1Position[0]-e2Position[0]};
+	  double[] distanceVector = {e1Position[0]-e2Position[0], e1Position[1]-e2Position[1]};
 	  double absDistance = Math.sqrt( ( distanceVector[0] * distanceVector[0] ) + ( distanceVector[1] * distanceVector[1] ) );
 	  
-	  return absDistance;
+	  return (int) absDistance;
   }
 }
