@@ -18,10 +18,6 @@ public class App {
 		int noOfTreasure;
 		int noOfEnemies;
 		int noOfVillagers;
-
-		
-		
-		
 		
 		System.out.println("Welcome to Gridlock!!");
 		System.out.println("You can make this grid as big as you like");
