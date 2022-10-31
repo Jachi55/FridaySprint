@@ -3,6 +3,7 @@ package com.sprint.game_text;
 
 public class Player extends Entity {
 
+	private Entity race;
 	private String name;
 	private boolean isAlive;
 	private boolean win;
@@ -13,6 +14,13 @@ public class Player extends Entity {
 		 setAlive(true);
 		 setWin(false);
 		 this.setSprite('P');
+	}
+	
+	public Player (String name, int[] position, Entity race) {
+		super(position);
+		this.name = name;
+		this.race = race;
+		this.setSprite(race.getSprite());
 	}
 	
 	

@@ -1,8 +1,6 @@
 package com.sprint.game_text;
 
 public class Villager extends Entity{
-	private String name;
-	private int ScoreValue = 10;
 	
 	
 	
@@ -11,19 +9,10 @@ public class Villager extends Entity{
 	public Villager(int[] position) {
 		super(position);
 		this.setSprite('V');
+
 	}
 	
-	public String getName() {
-		return this.name;
-	}
 	
-	public void setName(String new_name) {
-		this.name = new_name;
-	}
-	
-	public int getScoreValue() {
-		return this.ScoreValue;
-	}
 	
 	public void randomMove(Grid g) {
 		// Generate random position

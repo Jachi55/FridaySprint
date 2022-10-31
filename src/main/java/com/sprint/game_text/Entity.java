@@ -2,6 +2,7 @@ package com.sprint.game_text;
 
 public class Entity {
 
+	protected int value = 0;
 	protected int[] position;
 	protected int[] prevPosition;
 	private char sprite;
@@ -9,7 +10,6 @@ public class Entity {
 	public Entity(int[] position) {
 		this.position = position;
 		prevPosition = this.position.clone();
-		
 	}
 
 	public int[] getPosition() {
@@ -34,6 +34,10 @@ public class Entity {
 
 	public void setPrevPosition(int[] prevPosition) {
 		this.prevPosition = prevPosition;
+	}
+	
+	public int getValue() {
+		return value;
 	}
 	
 }
