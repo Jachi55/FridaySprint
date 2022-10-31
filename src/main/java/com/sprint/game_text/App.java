@@ -133,7 +133,7 @@ public class App {
 	}
 	
 	
-	public static void randomMove(Entity e, Grid g) {
+/*	public static void randomMove(Entity e, Grid g) {
 		
 		// Generate random position
 		int direction;
@@ -168,6 +168,7 @@ public class App {
 		}
 		
 		
+		
 		// Move entity
 		e.setPrevPosition(e.getPosition());
 		e.setPosition(newPos);
@@ -175,7 +176,7 @@ public class App {
 		// Update map position
 		g.updateTile(e.getPosition(), e);
 	}
-
+*/
 // Spawn Objects
 
 	public static void spawnEnemy(int noOfObjects, int[] playerLocation, ArrayList<Enemy> e, Grid grid) {
