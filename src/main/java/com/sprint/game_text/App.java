@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class App {
+	
+	public static int score = 0;
 
 	public static void main(String[] args) {
 
@@ -61,7 +63,7 @@ public class App {
 		for (Treasure t : treasure) {
 
 			if (Arrays.equals(player.getPosition(), t.getPosition())) {
-
+				score += t.getValue();
 				if (treasure.size() != 1) {
 					treasure.remove(t);
 					System.out.println("Congratulations you have found the treasure! There are " + treasure.size()
@@ -70,6 +72,7 @@ public class App {
 					break;
 				} else {
 					System.out.println("Congratulations you have found all the treasure! YOU WIN!");
+					System.out.println("Your score is: " + score);
 					win = true;
 					break;
 				}

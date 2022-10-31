@@ -2,11 +2,11 @@ package com.sprint.game_text;
 
 public class Villager extends Entity{
 	private String name;
-	private int ScoreValue = 10;
 	
 	public Villager(int[] position, String name) {
 		super(position);
 		this.name = name;
+		this.value = 20;
 	}
 	
 	public String getName() {
@@ -17,9 +17,6 @@ public class Villager extends Entity{
 		this.name = new_name;
 	}
 	
-	public int getScoreValue() {
-		return this.ScoreValue;
-	}
 	
 	public void randomMove(Grid g) {
 		// Generate random position
