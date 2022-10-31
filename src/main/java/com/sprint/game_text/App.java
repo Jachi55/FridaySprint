@@ -7,6 +7,8 @@ import java.util.Scanner;
 public class App {
 
 	private static ArrayList<Enemy> enemy = new ArrayList<Enemy>();
+	private static ArrayList<Villager> villager = new ArrayList<Villager>();
+	private static ArrayList<Treasure> treasure = new ArrayList<Treasure>();
 
 	public static void main(String[] args) {
 
@@ -16,10 +18,11 @@ public class App {
 		int noOfTreasure;
 		int noOfEnemies;
 		int noOfVillagers;
-		ArrayList<Villager> villager = new ArrayList<Villager>();
-		// ArrayList<Enemy> enemy = new ArrayList<Enemy>();
-		ArrayList<Treasure> treasure = new ArrayList<Treasure>();
 
+		
+		
+		
+		
 		System.out.println("Welcome to Gridlock!!");
 		System.out.println("You can make this grid as big as you like");
 		System.out.println("How many rows would you like?");
@@ -127,6 +130,50 @@ public class App {
 				.sqrt((distanceVector[0] * distanceVector[0]) + (distanceVector[1] * distanceVector[1]));
 
 		return (int) absDistance;
+	}
+	
+	
+	public static void randomMove(Entity e, Grid g) {
+		
+		// Generate random position
+		int direction;
+		int step;
+		int[] newPos;
+		
+		while (true) {
+			direction = (int) Math.random(); // Picks x or y
+			step = (int) ((Math.random() * 2) - 1); // Random number between -1 and 1
+			newPos = e.getPosition();
+			newPos[direction] += step; // Updates new position with random x/y step
+			
+			// Check position is valid
+			// Boundary Check
+			if (newPos[0] == 0 || newPos[0] == g.getRows()-1 || newPos[1] == 0 || newPos[1] == g.getColumns()-1) {
+				continue;
+				
+			}
+			
+			// Collision Check with treasure
+			for (Treasure t : treasure) {
+				if (newPos == t.getPosition()) {
+					continue;
+					
+				} else {
+					break;
+				}
+			}
+			
+			// Check collision with NPCs and other Entities
+			
+		}
+		
+		
+		// Move entity
+		e.setPrevPosition(e.getPosition());
+		e.setPosition(newPos);
+		
+		// Update map position
+		g.updateTile(e.getPosition(), e);
 	}
 
 // Spawn Objects
@@ -242,4 +289,6 @@ public class App {
 		}
 	}
 
+
 }
+
