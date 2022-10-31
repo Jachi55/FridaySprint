@@ -45,7 +45,7 @@ public class Grid {
     }
 	
     public void show() {
-        // Clear screen 
+        // Clear screen
         System.out.flush(); 
 
         // Assemble single output string

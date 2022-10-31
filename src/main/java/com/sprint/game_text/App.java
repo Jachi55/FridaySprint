@@ -6,6 +6,8 @@ import java.util.Scanner;
 public class App {
 	
   public static void main(String[] args) {
+	  
+	//======================== GAME SETUP ========================
     Scanner scanner = new Scanner (System.in);
     char move;
     double distanceFromTreasure;
@@ -33,13 +35,6 @@ public class App {
     
     Treasure treasure = new Treasure (treasureLocation);
     
-    
-    System.out.println(playerLocation[0]+ ", " + playerLocation[1]);
-    System.out.println(treasureLocation[0]+ ", " + treasureLocation[1]);
-    
-    
-    gameGrid.updateTile(treasure.getPosition(), treasure);
-    gameGrid.updateTile(player.getPosition(), player);
     gameGrid.show();
     int [] pos;
     
