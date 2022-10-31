@@ -19,8 +19,18 @@ public class Grid {
 		
 	}
 	
-	public void updateTile(int[] tile_position, char tile_sprite) {
-        this.grid[tile_position[0]][tile_position[1]] = tile_sprite;
+	public void updateTile(int[] tile_position, Entity e) {
+		
+		// Update previous tile back to 'x'
+		
+		int [] prev = e.getPrevPosition();
+		this.grid[prev[0]][prev[1]] = 'x';
+		
+
+		
+		// Update new entity tile
+		
+        this.grid[tile_position[0]][tile_position[1]] = e.getSprite();
     }
 
     public char getTile(int[] tilePosition) {
@@ -35,8 +45,7 @@ public class Grid {
     }
 	
     public void show() {
-        // Clear screen
-        System.out.print("\033[H\033[2J");  
+        // Clear screen 
         System.out.flush(); 
 
         // Assemble single output string
