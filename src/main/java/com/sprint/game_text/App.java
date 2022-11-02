@@ -42,6 +42,15 @@ public class App {
 		Player player = new Player(name, playerLocation);
 
 		// Spawn Objects
+		
+		// TEST
+		/*
+		int[] gobTestLoc = generateCoordinates(rows, columns);
+		Goblin gTest = new Goblin(gobTestLoc);
+		gTest.setSprite('G');
+		gameGrid.updateTile(gobTestLoc, gTest);
+		*/
+		// TEST
 
 		spawnTreasure(noOfTreasure, playerLocation, treasure, gameGrid);
 		spawnVillager(noOfVillagers, playerLocation, villager, gameGrid);
@@ -68,7 +77,7 @@ public class App {
 
 			d = (int) Math.sqrt((rows ^ 2) + (columns ^ 2));
 			for (Treasure t : treasure) {
-				d = Math.min(getDistance(player, t), d);
+				d = (int) Math.min(getDistance(player, t), d);
 			}
 
 			System.out.println("You are " + d + "m away from the closest Treasure");
@@ -87,6 +96,7 @@ public class App {
 			else {
 
 				player.movePlayer(move);
+				//randomMove(gTest, gameGrid); // TEST
 
 				updateTreasureTile(treasure, gameGrid);
 				updateEnemyTile(enemy, gameGrid);
@@ -116,7 +126,7 @@ public class App {
 	}
 
 	// Calculates Distance
-	public static int getDistance(Entity e1, Entity e2) {
+	public static double getDistance(Entity e1, Entity e2) {
 
 		int[] e1Position = e1.getPosition();
 		int[] e2Position = e2.getPosition();
@@ -125,40 +135,97 @@ public class App {
 		double absDistance = Math
 				.sqrt((distanceVector[0] * distanceVector[0]) + (distanceVector[1] * distanceVector[1]));
 
-		return (int) absDistance;
+
+		return absDistance;
+	}
+	
+	
+	public static void randomMove(Entity e, Grid g) {
+		
+		// Generate random position
+		int xy_direction;
+		int pm;
+		int stepSize = 1;
+		int[] newPos = {0,0};
+		
+		int calcCount = 0;
+		
+		boolean isValid = false;
+		while (calcCount < 5 && !isValid) {
+			
+			xy_direction = (int) (Math.random()*2); // Picks x or y
+			pm = (int) (Math.random()*2); // Picks positive or negative
+			int step = ((int) Math.pow(-1, pm)) * stepSize;
+			newPos = e.getPosition();
+			newPos[xy_direction] += step; // Updates new position with random x/y step
+			
+			if (newPos[0] < 0 || newPos[1] < 0) {
+				continue;
+			}
+			
+			/*
+			System.out.println("Goblin random step: " + step);
+			System.out.println("Goblin random xy_d: " + xy_direction);
+			System.out.println("oldPos: " + e.getPosition()[0] + "," + e.getPosition()[1]);
+			System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
+			*/
+			
+			// Check position is valid
+			// Boundary Check
+			if (newPos[0] <= 0 || newPos[0] >= g.getRows()-1 || newPos[1] <= 0 || newPos[1] >= g.getColumns()-1) {
+				System.out.println("Boundary Check");
+				isValid = false;
+			}
+			
+			// Collision Check with treasure
+			for (Treasure t : treasure) {
+				if (newPos == t.getPosition()) {
+					isValid = false;
+					break;
+				}
+			}
+			//System.out.println("Treasure Collision Check");
+			
+			// Collision Check with villager
+			for (Villager v : villager) {
+				if (newPos == v.getPosition()) {
+					isValid = false;
+					break;
+				}
+			}
+			//System.out.println("Villager Collision Check");
+			
+			// Collision Check with enemy
+			for (Enemy en : enemy) {
+				if (newPos == en.getPosition()) {
+					isValid = false;
+					break;
+				}
+			}
+			//System.out.println("Enemy Collision Check");
+			
+			// Check if the position leads to any collisions
+			if (isValid) {
+				break;
+			}
+			
+			calcCount++;
+			
+		}
+		
+		// Move entity
+		e.setPrevPosition(e.getPosition());
+		e.setPosition(newPos);
+		
+		// Update map position
+		g.updateTile(e.getPosition(), e);
+		
+		System.out.println("oldPos: " + e.getPosition()[0] + "," + e.getPosition()[1]);
+		System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
+		System.out.println("Move G from: " + e.getPrevPosition()[0] + "," + e.getPrevPosition()[1] + " to: " + e.getPosition()[0] + "," + e.getPosition()[1]);
+
 	}
 
-	/*
-	 * public static void randomMove(Entity e, Grid g) {
-	 * 
-	 * // Generate random position int direction; int step; int[] newPos;
-	 * 
-	 * while (true) { direction = (int) Math.random(); // Picks x or y step = (int)
-	 * ((Math.random() * 2) - 1); // Random number between -1 and 1 newPos =
-	 * e.getPosition(); newPos[direction] += step; // Updates new position with
-	 * random x/y step
-	 * 
-	 * // Check position is valid // Boundary Check if (newPos[0] == 0 || newPos[0]
-	 * == g.getRows()-1 || newPos[1] == 0 || newPos[1] == g.getColumns()-1) {
-	 * continue;
-	 * 
-	 * }
-	 * 
-	 * // Collision Check with treasure for (Treasure t : treasure) { if (newPos ==
-	 * t.getPosition()) { continue;
-	 * 
-	 * } else { break; } }
-	 * 
-	 * // Check collision with NPCs and other Entities
-	 * 
-	 * }
-	 * 
-	 * 
-	 * 
-	 * // Move entity e.setPrevPosition(e.getPosition()); e.setPosition(newPos);
-	 * 
-	 * // Update map position g.updateTile(e.getPosition(), e); }
-	 */
 // Spawn Objects
 
 	public static void spawnEnemy(int noOfObjects, int[] playerLocation, ArrayList<Enemy> e, Grid grid) {
