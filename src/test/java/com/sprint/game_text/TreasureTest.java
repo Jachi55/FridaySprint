@@ -11,7 +11,7 @@ public class TreasureTest {
 	
 	@Test
 	@DisplayName("Treasure initialisation")
-	void playerInitTest() {
+	void treasureInitTest() {
 		assertEquals(pos[0], treasure.getPosition()[0]);
 		assertEquals(pos[1], treasure.getPosition()[1]);
 	}
