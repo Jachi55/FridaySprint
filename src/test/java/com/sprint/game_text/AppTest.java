@@ -14,7 +14,7 @@ public class AppTest {
 	Treasure t1 = new Treasure(pos2);
 	Grid g = new Grid(20, 20);
 	
-   /* @Test
+    @Test
     @DisplayName("Distance Calculations")
     public void distanceCalculations() {
     	// Set positions
@@ -29,6 +29,7 @@ public class AppTest {
     	System.out.println(dist);
     	System.out.println(App.getDistance(p1, t1));
     	assertEquals(dist, App.getDistance(p1, t1));
-*/
+    }
+
 	
 }
