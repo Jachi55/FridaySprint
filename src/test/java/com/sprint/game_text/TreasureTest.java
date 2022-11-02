@@ -14,6 +14,5 @@ public class TreasureTest {
 	void treasureInitTest() {
 		assertEquals(pos[0], treasure.getPosition()[0]);
 		assertEquals(pos[1], treasure.getPosition()[1]);
-//		assertEquals(pos[1], treasure.getPosition()[1]);
 	}
 }
