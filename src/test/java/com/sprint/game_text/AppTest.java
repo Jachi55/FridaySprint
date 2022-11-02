@@ -22,7 +22,7 @@ public class AppTest {
     	t1.setPosition(pos2);
     	System.out.println("P1 Position: " + p1.getPosition()[0] + "," + p1.getPosition()[1]);
     	System.out.println("T1 Position: " + t1.getPosition()[0] + "," + t1.getPosition()[1]);
-    	
+  
     	// Calculate test distance
     	double[] distVec = {pos1[0]-pos2[0], pos1[1]-pos2[1]};
     	double dist = Math.sqrt( (distVec[0] * distVec[0]) + (distVec[1] * distVec[1]) );
