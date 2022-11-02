@@ -77,7 +77,7 @@ public class App {
 
 			d = (int) Math.sqrt((rows ^ 2) + (columns ^ 2));
 			for (Treasure t : treasure) {
-				d = Math.min(getDistance(player, t), d);
+				d = (int) Math.min(getDistance(player, t), d);
 			}
 
 			System.out.println("You are " + d + "m away from the closest Treasure");
@@ -126,7 +126,7 @@ public class App {
 	}
 
 	// Calculates Distance
-	public static int getDistance(Entity e1, Entity e2) {
+	public static double getDistance(Entity e1, Entity e2) {
 
 		int[] e1Position = e1.getPosition();
 		int[] e2Position = e2.getPosition();
@@ -135,7 +135,7 @@ public class App {
 		double absDistance = Math
 				.sqrt((distanceVector[0] * distanceVector[0]) + (distanceVector[1] * distanceVector[1]));
 
-		return (int) absDistance;
+		return absDistance;
 	}
 	
 	
