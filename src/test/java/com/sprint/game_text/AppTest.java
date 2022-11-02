@@ -30,6 +30,7 @@ public class AppTest {
     	assertEquals(dist, App.getDistance(p1, t1));
     }
     
+    /*
     @Test
     @DisplayName("Random Movement")
     public void randomMovement() {
@@ -40,4 +41,5 @@ public class AppTest {
     	App.randomMove(p1, g);
     	assertTrue(2 >= App.getDistance(p1, testPrevPos) );
     }
+    */
 }
