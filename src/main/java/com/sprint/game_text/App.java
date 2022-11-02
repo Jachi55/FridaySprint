@@ -18,24 +18,24 @@ public class App {
 		int noOfTreasure;
 		int noOfEnemies;
 		int noOfVillagers;
-		
+
 		System.out.println("Welcome to Gridlock!!");
 		System.out.println("You can make this grid as big as you like");
-		System.out.println("How many rows would you like?");
+		System.out.print("How many rows would you like? ");
 		int rows = scanner.nextInt();
 
-		System.out.println("How many columns would you like?");
+		System.out.print("How many columns would you like? ");
 		int columns = scanner.nextInt();
 		Grid gameGrid = new Grid(rows, columns);
 
-		System.out.println("How many pieces of treasure would you like to find?");
+		System.out.print("How many pieces of treasure would you like to find? ");
 		noOfTreasure = scanner.nextInt();
-		System.out.println("How many enemies would you like to spawn?");
+		System.out.print("How many enemies would you like to spawn? ");
 		noOfEnemies = scanner.nextInt();
-		System.out.println("How many villagers would you like to spawn?");
+		System.out.print("How many villagers would you like to spawn? ");
 		noOfVillagers = scanner.nextInt();
 
-		System.out.println("What is your name?");
+		System.out.print("What is your name? ");
 		String name = scanner.next();
 
 		int[] playerLocation = generateCoordinates(rows, columns);
@@ -127,52 +127,38 @@ public class App {
 
 		return (int) absDistance;
 	}
-	
-	
-/*	public static void randomMove(Entity e, Grid g) {
-		
-		// Generate random position
-		int direction;
-		int step;
-		int[] newPos;
-		
-		while (true) {
-			direction = (int) Math.random(); // Picks x or y
-			step = (int) ((Math.random() * 2) - 1); // Random number between -1 and 1
-			newPos = e.getPosition();
-			newPos[direction] += step; // Updates new position with random x/y step
-			
-			// Check position is valid
-			// Boundary Check
-			if (newPos[0] == 0 || newPos[0] == g.getRows()-1 || newPos[1] == 0 || newPos[1] == g.getColumns()-1) {
-				continue;
-				
-			}
-			
-			// Collision Check with treasure
-			for (Treasure t : treasure) {
-				if (newPos == t.getPosition()) {
-					continue;
-					
-				} else {
-					break;
-				}
-			}
-			
-			// Check collision with NPCs and other Entities
-			
-		}
-		
-		
-		
-		// Move entity
-		e.setPrevPosition(e.getPosition());
-		e.setPosition(newPos);
-		
-		// Update map position
-		g.updateTile(e.getPosition(), e);
-	}
-*/
+
+	/*
+	 * public static void randomMove(Entity e, Grid g) {
+	 * 
+	 * // Generate random position int direction; int step; int[] newPos;
+	 * 
+	 * while (true) { direction = (int) Math.random(); // Picks x or y step = (int)
+	 * ((Math.random() * 2) - 1); // Random number between -1 and 1 newPos =
+	 * e.getPosition(); newPos[direction] += step; // Updates new position with
+	 * random x/y step
+	 * 
+	 * // Check position is valid // Boundary Check if (newPos[0] == 0 || newPos[0]
+	 * == g.getRows()-1 || newPos[1] == 0 || newPos[1] == g.getColumns()-1) {
+	 * continue;
+	 * 
+	 * }
+	 * 
+	 * // Collision Check with treasure for (Treasure t : treasure) { if (newPos ==
+	 * t.getPosition()) { continue;
+	 * 
+	 * } else { break; } }
+	 * 
+	 * // Check collision with NPCs and other Entities
+	 * 
+	 * }
+	 * 
+	 * 
+	 * 
+	 * // Move entity e.setPrevPosition(e.getPosition()); e.setPosition(newPos);
+	 * 
+	 * // Update map position g.updateTile(e.getPosition(), e); }
+	 */
 // Spawn Objects
 
 	public static void spawnEnemy(int noOfObjects, int[] playerLocation, ArrayList<Enemy> e, Grid grid) {
@@ -226,7 +212,7 @@ public class App {
 		for (Treasure t : treasure) {
 
 			if (Arrays.equals(player.getPosition(), t.getPosition())) {
-				
+
 				player.setScore(player.getScore() + t.value);
 
 				if (treasure.size() != 1) {
@@ -262,7 +248,7 @@ public class App {
 		for (Villager v : villager) {
 
 			if (Arrays.equals(player.getPosition(), v.getPosition())) {
-				
+
 				player.setScore(player.getScore() + v.value);
 
 				System.out.println("You have saved a villager!!");
@@ -272,6 +258,8 @@ public class App {
 			}
 		}
 	}
+
+	// Update Tiles
 
 	public static void updateTreasureTile(ArrayList<Treasure> treasure, Grid grid) {
 		for (Treasure t : treasure) {
@@ -291,6 +279,4 @@ public class App {
 		}
 	}
 
-
 }
-
