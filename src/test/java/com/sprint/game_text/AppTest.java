@@ -33,20 +33,13 @@ public class AppTest {
     }
     
     @Test
-    @DisplayName("Random Movement")
-    public void randomMovement() {
-    	System.out.println("\nRandom Movement Test");
+    @DisplayName("Generate a Direction Vector")
+    public void directionVector() {
+    	int step = 1;
+    	int[] directionVector = App.generateDirectionVector(step);
     	
-    	// Set positions
-    	p1.setPosition(pos1);
-    	t1.setPosition(pos2);
-    	System.out.println("P1 Position: " + p1.getPosition()[0] + "," + p1.getPosition()[1]);
-    	
-    	// Move the player
-    	App.randomMove(p1, g);
-    	System.out.println("Player moved");
-    	System.out.println("P1 Position: " + p1.getPosition()[0] + "," + p1.getPosition()[1]);
+    	assertTrue( step >= Math.abs( directionVector[0] ) );
+    	assertTrue( step >= Math.abs( directionVector[1] ) );
     }
-
 	
 }
