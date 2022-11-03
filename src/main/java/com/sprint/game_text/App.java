@@ -9,7 +9,7 @@ public class App {
 	private static ArrayList<Enemy> enemy = new ArrayList<Enemy>();
 	private static ArrayList<Villager> villager = new ArrayList<Villager>();
 	private static ArrayList<Treasure> treasure = new ArrayList<Treasure>();
-
+	
 	public static void main(String[] args) {
 
 		// ======================== GAME SETUP ======================== //
@@ -37,10 +37,26 @@ public class App {
 
 		System.out.print("What is your name? ");
 		String name = scanner.next();
+		
+		System.out.println("Who would you like to play as? \n"
+				+ "Player, Goblin or Minotaur");
+		String characterV = scanner.next();
 
 		int[] playerLocation = generateCoordinates(rows, columns);
-		Player player = new Player(name, playerLocation);
-
+		
+		Player player;
+		
+		if (characterV.equals("Goblin")) {
+			player = new Player(name, playerLocation, "Goblin");
+		}
+		else if (characterV.equals("Minotaur")) {
+			player = new Player(name, playerLocation, "Minotaur");
+		}
+		
+		else player = new Player(name, playerLocation);
+		
+		System.out.print("Welcome " + name + "! You are playing as a " + player.getRace() + ", shown on the map by the letter: " + player.getSprite());
+		
 		// Spawn Objects
 		
 		// TEST
@@ -59,6 +75,7 @@ public class App {
 		gameGrid.updateTile(player.getPosition(), player);
 
 		gameGrid.show();
+		
 
 		int[] pos;
 		int d;

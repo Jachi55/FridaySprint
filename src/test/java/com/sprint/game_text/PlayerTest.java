@@ -44,5 +44,13 @@ class PlayerTest {
 		this.testPlayer.setSprite(newSprite);;
 		assertEquals(newSprite, this.testPlayer.getSprite());
 	}
+	
+	private Player testplayer2 = new Player("testPlayer2",init_pos, "Goblin");
+	
+	@Test
+	@DisplayName("Player with type")
+	void getPlayerType() {
+		assertEquals('G', testplayer2.getSprite());
+	}
 
 }

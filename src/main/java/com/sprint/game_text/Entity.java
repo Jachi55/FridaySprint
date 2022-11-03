@@ -2,6 +2,7 @@ package com.sprint.game_text;
 
 public class Entity {
 
+	protected String race;
 	protected int value = 0;
 	protected int[] position;
 	protected int[] prevPosition;
@@ -39,5 +40,8 @@ public class Entity {
 	public int getValue() {
 		return value;
 	}
-	
+
+	public String getRace() {
+		return race;
+	}
 }

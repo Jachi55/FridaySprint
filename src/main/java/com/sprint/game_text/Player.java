@@ -4,7 +4,6 @@ package com.sprint.game_text;
 public class Player extends Entity {
 
 	private int playerScore;
-	private Entity race;
 	private String name;
 	private boolean isAlive;
 	private boolean win;
@@ -14,15 +13,28 @@ public class Player extends Entity {
 		 this.name = name;
 		 setAlive(true);
 		 setWin(false);
+		 this.race = "Player";
 		 this.setSprite('P');
 	}
 	
-	public Player (String name, int[] position, Entity race) {
+	public Player (String name, int[] position, String race) {
 		super(position);
 		this.name = name;
+		setAlive(true);
+		 setWin(false);
 		this.race = race;
-		this.setSprite(race.getSprite());
+		if (race.equals("Goblin")) {
+			this.setSprite('G');
+		}
+		else if(race.equals("Minotaur")) {
+			this.setSprite('M');
+		}
+		else {
+			this.setSprite('P');
+		}
+		
 	}
+	
 	
 	
 	public void movePlayer(char dir) {
@@ -58,7 +70,7 @@ public class Player extends Entity {
 	public String getName() {
 		return name;
 	}
-
+	
 	public void setName(String name) {
 		this.name = name;
 	}
