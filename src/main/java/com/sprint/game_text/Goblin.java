@@ -5,6 +5,7 @@ public class Goblin extends Enemy {
 	public Goblin(int[] position) {
 		super(position);
 		this.race = "Goblin";
+		this.setSprite('G');
 	}
 	
 	

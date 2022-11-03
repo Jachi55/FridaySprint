@@ -44,5 +44,7 @@ class PlayerTest {
 		this.testPlayer.setSprite(newSprite);;
 		assertEquals(newSprite, this.testPlayer.getSprite());
 	}
+	
+
 
 }
