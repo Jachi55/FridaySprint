@@ -3,8 +3,6 @@ package com.sprint.game_text;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-import java.util.ArrayList;
-
 import org.junit.jupiter.api.DisplayName;
 
 @DisplayName("App Tests")

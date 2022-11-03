@@ -72,7 +72,6 @@ public class App {
 			}
 		}
 
-
 		spawnTreasure(noOfTreasure, playerLocation, treasure, gameGrid);
 		spawnVillager(noOfVillagers, playerLocation, villager, gameGrid);
 		spawnEnemy(noOfEnemies, playerLocation, enemy, gameGrid);
@@ -355,13 +354,6 @@ public class App {
 
 		// Update map position
 		g.updateTile(e.getPosition(), e);
-
-		// System.out.println("oldPos: " + e.getPosition()[0] + "," +
-		// e.getPosition()[1]);
-		// System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
-		// System.out.println("Move G from: " + e.getPrevPosition()[0] + "," +
-		// e.getPrevPosition()[1] + " to: " + e.getPosition()[0] + "," +
-		// e.getPosition()[1]);
 
 	}
 
