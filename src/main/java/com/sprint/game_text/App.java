@@ -28,11 +28,17 @@ public class App {
 		int columns = scanner.nextInt();
 		Grid gameGrid = new Grid(rows, columns);
 
-		System.out.print("How many pieces of treasure would you like to find? ");
+		int maxNumber = (gameGrid.getRows() * gameGrid.getColumns())-1;
+		
+		
+		System.out.print("How many pieces of treasure would you like to find?\n"
+				+ "Enter a number between: " + "1 and " + maxNumber);
 		noOfTreasure = scanner.nextInt();
-		System.out.print("How many enemies would you like to spawn? ");
+		System.out.print("How many enemies would you like to spawn?\n"
+				+ "Enter a number between: " + "0 and " + (maxNumber - noOfTreasure));
 		noOfEnemies = scanner.nextInt();
-		System.out.print("How many villagers would you like to spawn? ");
+		System.out.print("How many villagers would you like to spawn?\n"
+				+ "Enter a number between: " + "0 and " + (maxNumber - noOfTreasure - noOfEnemies));
 		noOfVillagers = scanner.nextInt();
 
 		System.out.print("What is your name? ");
