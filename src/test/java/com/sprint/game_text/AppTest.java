@@ -44,7 +44,7 @@ public class AppTest {
     @DisplayName("Generate a Direction Vector")
     public void directionVector() {
     	int step = 1;
-    	int[] directionVector = App.generateDirectionVector(step);
+    	int[] directionVector = App.generateRandomDirectionVector(step);
     	
     	assertTrue( step >= Math.abs( directionVector[0] ) );
     	assertTrue( step >= Math.abs( directionVector[1] ) );
