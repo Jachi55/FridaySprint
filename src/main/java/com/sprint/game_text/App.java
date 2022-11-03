@@ -129,13 +129,27 @@ public class App {
 		return absDistance;
 	}
 	
-	
-	public static void randomMove(Entity e, Grid g) {
-		
+	public static int[] generateDirectionVector(int entityStepSize) {
 		// Generate random position
 		int xy_direction;
 		int pm;
-		int stepSize = 1;
+		int stepSize = entityStepSize;
+		int[] newDirection = {0,0};
+		
+		// Generate new direction
+		xy_direction = (int) (Math.random()*2); // Picks x or y
+		pm = (int) (Math.random()*2); // Picks positive or negative
+		int step = ((int) Math.pow(-1, pm)) * stepSize; // calculates the step
+		newDirection[xy_direction] = step; // Updates new direction with the random x/y step
+		
+		return newDirection;
+	}
+	
+	
+	public static void randomMove(Entity e, Grid g, int attempts) {
+		
+		// Generate random position
+		int maxTries = attempts;
 		int[] newDirection = {0,0};
 		int[] initialPos = e.getPosition();
 		int[] newPos = {0,0};
@@ -143,19 +157,15 @@ public class App {
 		int calcCount = 0;
 		
 		boolean isValid = false;
-		while (calcCount < 5 && !isValid) {
+		while (calcCount <= maxTries && !isValid) {
+			System.out.println("Attempt " + calcCount + "/" + maxTries);
 			
 			isValid = true;
-			// reset direction vector
-			newDirection[0] = 0;
-			newDirection[1] = 0;
 			
 			// Generate new direction
-			xy_direction = (int) (Math.random()*2); // Picks x or y
-			pm = (int) (Math.random()*2); // Picks positive or negative
-			int step = ((int) Math.pow(-1, pm)) * stepSize;
-			newDirection[xy_direction] = step; // Updates new position with random x/y step
-			
+			int[] dv = App.generateDirectionVector(1);
+			newDirection[0] = dv[0];
+			newDirection[1] = dv[1];
 			
 			//System.out.println("New direction is: " + newDirection[0] + ", " + newDirection[1]);
 			
