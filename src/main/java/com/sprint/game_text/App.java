@@ -186,7 +186,7 @@ public class App {
 		return absDistance;
 	}
 
-	public static int[] generateDirectionVector(int entityStepSize) {
+	public static int[] generateRandomDirectionVector(int entityStepSize) {
 		// Generate random position
 		int xy_direction;
 		int pm;
