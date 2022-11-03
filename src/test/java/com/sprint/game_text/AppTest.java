@@ -2,16 +2,24 @@ package com.sprint.game_text;
 
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.ArrayList;
+
 import org.junit.jupiter.api.DisplayName;
 
 @DisplayName("App Tests")
 public class AppTest {
 	
-	int[] pos1 = {0,0};
-	int[] pos2 = {2,2};
+	int[] pos1 = {0, 0};
+	int[] pos2 = {2, 2};
+	int[] pos3 = {3, 3};
+	int[] pos4 = {7, 7};
 	  
 	Player p1 = new Player("Player1", pos1);
 	Treasure t1 = new Treasure(pos2);
+	Villager v1 = new Villager(pos3);
+	Enemy e1 = new Enemy(pos4);
+	
 	Grid g = new Grid(20, 20);
 	
     @Test

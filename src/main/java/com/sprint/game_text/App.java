@@ -2,6 +2,7 @@ package com.sprint.game_text;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.Scanner;
 
 public class App {
@@ -40,6 +41,13 @@ public class App {
 
 		int[] playerLocation = generateCoordinates(rows, columns);
 		Player player = new Player(name, playerLocation);
+		
+		// TEST
+		//int[] gobTestLoc = generateCoordinates(rows, columns);
+		//Goblin gTest = new Goblin(gobTestLoc);
+		//gTest.setSprite('G');
+		//gameGrid.updateTile(gobTestLoc, gTest);
+		// TEST
 
 		// Spawn Objects
 
@@ -87,7 +95,12 @@ public class App {
 			else {
 
 				player.movePlayer(move);
-
+				
+				// TEST
+				//App.randomMove(gTest, gameGrid, 5); // TEST
+				//App.pathFind(gTest, player, gameGrid); // TEST
+				// TEST
+				
 				updateTreasureTile(treasure, gameGrid);
 				updateEnemyTile(enemy, gameGrid);
 				updateVillagerTile(villager, gameGrid);
@@ -145,6 +158,114 @@ public class App {
 		return newDirection;
 	}
 	
+	public static void pathFind(Entity finder, Entity target, Grid g) {
+		
+		// Get starting position of finder
+		int[] finderCurrentPosition = finder.getPosition();
+		
+		// Generate new positions for each direction
+		// Direction vectors
+		int[] up = {0, -1};
+		int[] down = {0, 1};
+		int[] left = {-1, 0};
+		int[] right = {1, 0};
+		
+		int[][] directions = new int[4][2];
+		
+		directions[0][0] = up[0];
+		directions[0][1] = up[1];
+		
+		directions[1][0] = down[0];
+		directions[1][1] = down[1];
+		
+		directions[2][0] = left[0];
+		directions[2][1] = left[1];
+		
+		directions[3][0] = right[0];
+		directions[3][1] = right[1];
+		
+		// New positions
+		HashMap<Integer, int[]> validPositions = new HashMap<Integer, int[]>();
+		
+		// Loop through and run validity checks in parallel
+		for (int i = 0; i < 4; i++) {
+			// Calculate the new position
+			int[] newPos = {0,0};
+			newPos[0] = finderCurrentPosition[0] + directions[i][0];
+			newPos[1] = finderCurrentPosition[1] + directions[i][1];
+			
+			// Check if it is valid
+			if (App.isPositionValid(newPos, g)) {
+				validPositions.put(i, newPos);
+			}
+			
+		}
+		
+		if (validPositions.size() == 0) {
+			return;
+		}
+		
+		// Check the distances from each new position to the entity to find
+		double[] distances = new double[validPositions.size()];
+		Entity mockFinder = new Entity(validPositions.get(0));
+		double shortestDistance = Math.max((double) g.getColumns(), (double) g.getRows()); // Start with a big value
+		int shortestIndex = 0;
+		
+		for (int i = 0; i < distances.length; i++) {
+			
+			mockFinder.setPosition(validPositions.get(i));
+			double dist = App.getDistance(mockFinder, target);
+			distances[i] = dist;
+			
+			if (dist <= shortestDistance) {
+				shortestDistance = dist;
+				shortestIndex = i;
+			}
+			
+		}
+		
+		// Select the position which is closest to the target and move the finder
+		finder.setPrevPosition(finder.getPosition());
+		finder.setPosition(validPositions.get(shortestIndex));
+				
+		// Update finder map position
+		g.updateTile(finder.getPosition(), finder);
+	}
+	
+	public static boolean isPositionValid(int[] pos, Grid g) {
+		
+		// Boundary Check
+		if (pos[0] < 0 || pos[0] > g.getRows()-1 || pos[1] < 0 || pos[1] > g.getColumns()-1) {
+			//System.out.println("Boundary Check Failed");
+			return false;
+		}
+		
+		// Collision Check with treasure
+		for (Treasure t : treasure) {
+			if (pos == t.getPosition()) {
+				//System.out.println("Treasure Collision");
+				return false;
+			}
+		}
+					
+		// Collision Check with villager
+		for (Villager v : villager) {
+			if (pos == v.getPosition()) {
+				//System.out.println("Villager Collision");
+				return false;
+			}
+		}
+					
+		// Collision Check with enemy
+		for (Enemy en : enemy) {
+			if (pos == en.getPosition()) {
+				//System.out.println("Enemy Collision");
+				return false;
+			}
+		}
+		
+		return true;
+	}
 	
 	public static void randomMove(Entity e, Grid g, int attempts) {
 		
@@ -179,40 +300,38 @@ public class App {
 			//System.out.println("New Position is: " + newPos[0] + ", " + newPos[1]);
 			
 			// Run checks
-			
-			// Check position is valid
 			// Boundary Check
 			if (newPos[0] <= 0 || newPos[0] >= g.getRows()-1 || newPos[1] <= 0 || newPos[1] >= g.getColumns()-1) {
-				//System.out.println("Boundary Check Failed");
-				isValid = false;
-			}
+ 				//System.out.println("Boundary Check Failed");
+ 				isValid = false;
+ 			}
 			
 			// Collision Check with treasure
-			for (Treasure t : treasure) {
-				if (newPos == t.getPosition()) {
-					//System.out.println("Treasure Collision");
-					isValid = false;
-					break;
-				}
-			}
-			
-			// Collision Check with villager
-			for (Villager v : villager) {
-				if (newPos == v.getPosition()) {
-					//System.out.println("Villager Collision");
-					isValid = false;
-					break;
-				}
-			}
-			
-			// Collision Check with enemy
-			for (Enemy en : enemy) {
-				if (newPos == en.getPosition()) {
-					//System.out.println("Enemy Collision");
-					isValid = false;
-					break;
-				}
-			}
+ 			for (Treasure t : treasure) {
+ 				if (newPos == t.getPosition()) {
+ 					//System.out.println("Treasure Collision");
+ 					isValid = false;
+ 					break;
+ 				}
+ 			}
+ 			
+ 			// Collision Check with villager
+ 			for (Villager v : villager) {
+ 				if (newPos == v.getPosition()) {
+ 					//System.out.println("Villager Collision");
+ 					isValid = false;
+ 					break;
+ 				}
+ 			}
+ 			
+ 			// Collision Check with enemy
+ 			for (Enemy en : enemy) {
+ 				if (newPos == en.getPosition()) {
+ 					//System.out.println("Enemy Collision");
+ 					isValid = false;
+ 					break;
+ 				}
+ 			}
 			
 			// Check if the position leads to any collisions
 			if (isValid) {
