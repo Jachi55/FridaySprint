@@ -42,15 +42,6 @@ public class App {
 		Player player = new Player(name, playerLocation);
 
 		// Spawn Objects
-		
-		// TEST
-		/*
-		int[] gobTestLoc = generateCoordinates(rows, columns);
-		Goblin gTest = new Goblin(gobTestLoc);
-		gTest.setSprite('G');
-		gameGrid.updateTile(gobTestLoc, gTest);
-		*/
-		// TEST
 
 		spawnTreasure(noOfTreasure, playerLocation, treasure, gameGrid);
 		spawnVillager(noOfVillagers, playerLocation, villager, gameGrid);
@@ -96,7 +87,6 @@ public class App {
 			else {
 
 				player.movePlayer(move);
-				//randomMove(gTest, gameGrid); // TEST
 
 				updateTreasureTile(treasure, gameGrid);
 				updateEnemyTile(enemy, gameGrid);
@@ -146,6 +136,8 @@ public class App {
 		int xy_direction;
 		int pm;
 		int stepSize = 1;
+		int[] newDirection = {0,0};
+		int[] initialPos = e.getPosition();
 		int[] newPos = {0,0};
 		
 		int calcCount = 0;
@@ -153,56 +145,64 @@ public class App {
 		boolean isValid = false;
 		while (calcCount < 5 && !isValid) {
 			
+			isValid = true;
+			// reset direction vector
+			newDirection[0] = 0;
+			newDirection[1] = 0;
+			
+			// Generate new direction
 			xy_direction = (int) (Math.random()*2); // Picks x or y
 			pm = (int) (Math.random()*2); // Picks positive or negative
 			int step = ((int) Math.pow(-1, pm)) * stepSize;
-			newPos = e.getPosition();
-			newPos[xy_direction] += step; // Updates new position with random x/y step
+			newDirection[xy_direction] = step; // Updates new position with random x/y step
 			
-			if (newPos[0] < 0 || newPos[1] < 0) {
-				continue;
-			}
 			
-			/*
-			System.out.println("Goblin random step: " + step);
-			System.out.println("Goblin random xy_d: " + xy_direction);
-			System.out.println("oldPos: " + e.getPosition()[0] + "," + e.getPosition()[1]);
-			System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
-			*/
+			//System.out.println("New direction is: " + newDirection[0] + ", " + newDirection[1]);
+			
+			// Add the direction to the current position
+			newPos[0] = initialPos[0];
+			newPos[1] = initialPos[1];
+			
+			newPos[0] += newDirection[0];
+			newPos[1] += newDirection[1];
+			
+			//System.out.println("New Position is: " + newPos[0] + ", " + newPos[1]);
+			
+			// Run checks
 			
 			// Check position is valid
 			// Boundary Check
 			if (newPos[0] <= 0 || newPos[0] >= g.getRows()-1 || newPos[1] <= 0 || newPos[1] >= g.getColumns()-1) {
-				System.out.println("Boundary Check");
+				//System.out.println("Boundary Check Failed");
 				isValid = false;
 			}
 			
 			// Collision Check with treasure
 			for (Treasure t : treasure) {
 				if (newPos == t.getPosition()) {
+					//System.out.println("Treasure Collision");
 					isValid = false;
 					break;
 				}
 			}
-			//System.out.println("Treasure Collision Check");
 			
 			// Collision Check with villager
 			for (Villager v : villager) {
 				if (newPos == v.getPosition()) {
+					//System.out.println("Villager Collision");
 					isValid = false;
 					break;
 				}
 			}
-			//System.out.println("Villager Collision Check");
 			
 			// Collision Check with enemy
 			for (Enemy en : enemy) {
 				if (newPos == en.getPosition()) {
+					//System.out.println("Enemy Collision");
 					isValid = false;
 					break;
 				}
 			}
-			//System.out.println("Enemy Collision Check");
 			
 			// Check if the position leads to any collisions
 			if (isValid) {
@@ -220,9 +220,9 @@ public class App {
 		// Update map position
 		g.updateTile(e.getPosition(), e);
 		
-		System.out.println("oldPos: " + e.getPosition()[0] + "," + e.getPosition()[1]);
-		System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
-		System.out.println("Move G from: " + e.getPrevPosition()[0] + "," + e.getPrevPosition()[1] + " to: " + e.getPosition()[0] + "," + e.getPosition()[1]);
+		//System.out.println("oldPos: " + e.getPosition()[0] + "," + e.getPosition()[1]);
+		//System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
+		//System.out.println("Move G from: " + e.getPrevPosition()[0] + "," + e.getPrevPosition()[1] + " to: " + e.getPosition()[0] + "," + e.getPosition()[1]);
 
 	}
 

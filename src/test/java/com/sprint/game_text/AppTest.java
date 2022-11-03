@@ -17,6 +17,7 @@ public class AppTest {
     @Test
     @DisplayName("Distance Calculations")
     public void distanceCalculations() {
+    	System.out.println("\nDistance Calculations Test");
     	// Set positions
     	p1.setPosition(pos1);
     	t1.setPosition(pos2);
@@ -29,6 +30,22 @@ public class AppTest {
     	System.out.println(dist);
     	System.out.println(App.getDistance(p1, t1));
     	assertEquals(dist, App.getDistance(p1, t1));
+    }
+    
+    @Test
+    @DisplayName("Random Movement")
+    public void randomMovement() {
+    	System.out.println("\nRandom Movement Test");
+    	
+    	// Set positions
+    	p1.setPosition(pos1);
+    	t1.setPosition(pos2);
+    	System.out.println("P1 Position: " + p1.getPosition()[0] + "," + p1.getPosition()[1]);
+    	
+    	// Move the player
+    	App.randomMove(p1, g);
+    	System.out.println("Player moved");
+    	System.out.println("P1 Position: " + p1.getPosition()[0] + "," + p1.getPosition()[1]);
     }
 
 	
