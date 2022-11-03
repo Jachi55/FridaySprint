@@ -325,17 +325,13 @@ public class App {
 
 		boolean isValid = false;
 		while (calcCount <= maxTries && !isValid) {
-			// System.out.println("Attempt " + calcCount + "/" + maxTries);
 
 			isValid = true;
 
 			// Generate new direction
-			int[] dv = App.generateDirectionVector(1);
+			int[] dv = App.generateRandomDirectionVector(1);
 			newDirection[0] = dv[0];
 			newDirection[1] = dv[1];
-
-			// System.out.println("New direction is: " + newDirection[0] + ", " +
-			// newDirection[1]);
 
 			// Add the direction to the current position
 			newPos[0] = initialPos[0];
@@ -343,47 +339,9 @@ public class App {
 
 			newPos[0] += newDirection[0];
 			newPos[1] += newDirection[1];
-
-			// System.out.println("New Position is: " + newPos[0] + ", " + newPos[1]);
-
-			// Run checks
-			// Check position is valid
-			// Boundary Check
-			if (newPos[0] <= 0 || newPos[0] >= g.getRows()-1 || newPos[1] <= 0 || newPos[1] >= g.getColumns()-1) {
- 				//System.out.println("Boundary Check Failed");
- 				isValid = false;
- 			}
 			
-			// Collision Check with treasure
-			for (Treasure t : treasure) {
-				if (newPos == t.getPosition()) {
-					// System.out.println("Treasure Collision");
-					isValid = false;
-					break;
-				}
-			}
-
-			// Collision Check with villager
-			for (Villager v : villager) {
-				if (newPos == v.getPosition()) {
-					// System.out.println("Villager Collision");
-					isValid = false;
-					break;
-				}
-			}
-
-			// Collision Check with enemy
-			for (Enemy en : enemy) {
-				if (newPos == en.getPosition()) {
-					// System.out.println("Enemy Collision");
-					isValid = false;
-					break;
-				}
-			}
-
-
-			// Check if the position leads to any collisions
-			if (isValid) {
+			// Check if the new position is valid
+			if (App.isPositionValid(newPos, g)) {
 				break;
 			}
 
