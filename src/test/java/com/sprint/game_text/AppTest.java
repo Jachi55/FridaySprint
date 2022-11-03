@@ -17,6 +17,7 @@ public class AppTest {
     @Test
     @DisplayName("Distance Calculations")
     public void distanceCalculations() {
+    	System.out.println("\nDistance Calculations Test");
     	// Set positions
     	p1.setPosition(pos1);
     	t1.setPosition(pos2);
@@ -30,6 +31,15 @@ public class AppTest {
     	System.out.println(App.getDistance(p1, t1));
     	assertEquals(dist, App.getDistance(p1, t1));
     }
-
+    
+    @Test
+    @DisplayName("Generate a Direction Vector")
+    public void directionVector() {
+    	int step = 1;
+    	int[] directionVector = App.generateDirectionVector(step);
+    	
+    	assertTrue( step >= Math.abs( directionVector[0] ) );
+    	assertTrue( step >= Math.abs( directionVector[1] ) );
+    }
 	
 }
