@@ -28,17 +28,24 @@ public class App {
 		int columns = scanner.nextInt();
 		Grid gameGrid = new Grid(rows, columns);
 
-		System.out.print("How many pieces of treasure would you like to find? ");
+		int maxNumber = (gameGrid.getRows() * gameGrid.getColumns())-1;
+		
+		
+		System.out.print("How many pieces of treasure would you like to find?\n"
+				+ "Enter a number between: " + "1 and " + maxNumber);
 		noOfTreasure = scanner.nextInt();
-		System.out.print("How many enemies would you like to spawn? ");
+		System.out.print("How many enemies would you like to spawn?\n"
+				+ "Enter a number between: " + "0 and " + (maxNumber - noOfTreasure));
 		noOfEnemies = scanner.nextInt();
-		System.out.print("How many villagers would you like to spawn? ");
+		System.out.print("How many villagers would you like to spawn?\n"
+				+ "Enter a number between: " + "0 and " + (maxNumber - noOfTreasure - noOfEnemies));
 		noOfVillagers = scanner.nextInt();
 
 		System.out.print("What is your name? ");
 		String name = scanner.next();
 
 		int[] playerLocation = generateCoordinates(rows, columns);
+
 
 		Player player = new Player(name, playerLocation);
 
@@ -55,10 +62,8 @@ public class App {
 				enemy.add(playEnemy);
 				gameGrid.updateTile(playEnemy.getPosition(), playEnemy);
 			}
-
 		}
 
-		// Spawn Objects
 
 		spawnTreasure(noOfTreasure, playerLocation, treasure, gameGrid);
 		spawnVillager(noOfVillagers, playerLocation, villager, gameGrid);
@@ -191,7 +196,7 @@ public class App {
 
 		boolean isValid = false;
 		while (calcCount <= maxTries && !isValid) {
-			//System.out.println("Attempt " + calcCount + "/" + maxTries);
+			// System.out.println("Attempt " + calcCount + "/" + maxTries);
 
 			isValid = true;
 
