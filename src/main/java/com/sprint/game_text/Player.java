@@ -23,10 +23,10 @@ public class Player extends Entity {
 		setAlive(true);
 		 setWin(false);
 		this.race = race;
-		if (race.equals("Goblin")) {
+		if (race.equalsIgnoreCase("Goblin")) {
 			this.setSprite('G');
 		}
-		else if(race.equals("Minotaur")) {
+		else if(race.equalsIgnoreCase("Minotaur")) {
 			this.setSprite('M');
 		}
 		else {

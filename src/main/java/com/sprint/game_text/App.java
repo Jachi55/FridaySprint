@@ -46,10 +46,10 @@ public class App {
 		
 		Player player;
 		
-		if (characterV.equals("Goblin")) {
+		if (characterV.equalsIgnoreCase("Goblin")) {
 			player = new Player(name, playerLocation, "Goblin");
 		}
-		else if (characterV.equals("Minotaur")) {
+		else if (characterV.equalsIgnoreCase("Minotaur")) {
 			player = new Player(name, playerLocation, "Minotaur");
 		}
 		
