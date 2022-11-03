@@ -9,7 +9,7 @@ public class App {
 	private static ArrayList<Enemy> enemy = new ArrayList<Enemy>();
 	private static ArrayList<Villager> villager = new ArrayList<Villager>();
 	private static ArrayList<Treasure> treasure = new ArrayList<Treasure>();
-	
+
 	public static void main(String[] args) {
 
 		// ======================== GAME SETUP ======================== //
@@ -37,26 +37,27 @@ public class App {
 
 		System.out.print("What is your name? ");
 		String name = scanner.next();
-		
-		System.out.println("Who would you like to play as? \n"
-				+ "Player, Goblin or Minotaur");
-		String characterV = scanner.next();
 
 		int[] playerLocation = generateCoordinates(rows, columns);
-		
-		Player player;
-		
-		if (characterV.equals("Goblin")) {
-			player = new Player(name, playerLocation, "Goblin");
+
+		Player player = new Player(name, playerLocation);
+
+		// Add Playable Enemy to Map
+
+		if (noOfEnemies != 0) {
+			System.out.println("Do you want to play as an enemy as well? y/n");
+			char ans = scanner.next().charAt(0);
+			ans = Character.toLowerCase(ans);
+			if (ans == 'y') {
+				int[] ePlayerLocation = generateCoordinates(rows, columns);
+				Enemy playEnemy = new Enemy(ePlayerLocation, true);
+
+				enemy.add(playEnemy);
+				gameGrid.updateTile(playEnemy.getPosition(), playEnemy);
+			}
+
 		}
-		else if (characterV.equals("Minotaur")) {
-			player = new Player(name, playerLocation, "Minotaur");
-		}
-		
-		else player = new Player(name, playerLocation);
-		
-		System.out.print("Welcome " + name + "! You are playing as a " + player.getRace() + ", shown on the map by the letter: " + player.getSprite());
-		
+
 		// Spawn Objects
 
 		spawnTreasure(noOfTreasure, playerLocation, treasure, gameGrid);
@@ -66,9 +67,7 @@ public class App {
 		gameGrid.updateTile(player.getPosition(), player);
 
 		gameGrid.show();
-		
 
-		int[] pos;
 		int d;
 
 		// ======================== GAME LOOP ======================== //
@@ -89,14 +88,12 @@ public class App {
 			}
 
 			System.out.println("You are " + d + "m away from the closest Treasure");
-			System.out.println("\n Use 'wasd' to move!");
+			System.out.println("\n You are controlling " + player.getName() + " 'wasd' to move!");
 			move = scanner.next().charAt(0);
-			pos = player.getPosition();
 
-			// Boundary Control
-
-			if ((pos[1] == columns - 1 && move == 'd') || pos[1] <= 0 && move == 'a'
-					|| pos[0] == rows - 1 && move == 's' || pos[0] <= 0 && move == 'w') {
+			if ((player.getPosition()[1] == columns - 1 && move == 'd') || player.getPosition()[1] <= 0 && move == 'a'
+					|| player.getPosition()[0] == rows - 1 && move == 's'
+					|| player.getPosition()[0] <= 0 && move == 'w') {
 
 				System.out.println("Out of Bounds!!");
 			}
@@ -104,15 +101,36 @@ public class App {
 			else {
 
 				player.movePlayer(move);
+				
 
-				updateTreasureTile(treasure, gameGrid);
-				updateEnemyTile(enemy, gameGrid);
-				updateVillagerTile(villager, gameGrid);
-				gameGrid.updateTile(player.getPosition(), player);
+				// Check for playable enemies and move accordingly
+				for (Enemy e : enemy) {
+					if (e.isPlayable()) {
+						System.out.println("\n You are controlling an Enemy use 'wasd' to move!");
+						char eMove = scanner.next().charAt(0);
 
-				gameGrid.show();
+						e.moveEntity(eMove, gameGrid);
+					} else {
+						randomMove(e, gameGrid, 5);
+					}
+				}
+				for (Villager v : villager) {
+					
+					randomMove(v, gameGrid, 5);
+				}
 
 			}
+
+			// for each Villager v in villager , randomMove();
+
+			updateTreasureTile(treasure, gameGrid);
+			updateVillagerTile(villager, gameGrid);
+			updateEnemyTile(enemy, gameGrid);
+			gameGrid.updateTile(player.getPosition(), player);
+
+
+			gameGrid.show();
+
 		}
 
 		scanner.close();
@@ -142,114 +160,116 @@ public class App {
 		double absDistance = Math
 				.sqrt((distanceVector[0] * distanceVector[0]) + (distanceVector[1] * distanceVector[1]));
 
-
 		return absDistance;
 	}
-	
+
 	public static int[] generateDirectionVector(int entityStepSize) {
 		// Generate random position
 		int xy_direction;
 		int pm;
 		int stepSize = entityStepSize;
-		int[] newDirection = {0,0};
-		
+		int[] newDirection = { 0, 0 };
+
 		// Generate new direction
-		xy_direction = (int) (Math.random()*2); // Picks x or y
-		pm = (int) (Math.random()*2); // Picks positive or negative
+		xy_direction = (int) (Math.random() * 2); // Picks x or y
+		pm = (int) (Math.random() * 2); // Picks positive or negative
 		int step = ((int) Math.pow(-1, pm)) * stepSize; // calculates the step
 		newDirection[xy_direction] = step; // Updates new direction with the random x/y step
-		
+
 		return newDirection;
 	}
-	
-	
+
 	public static void randomMove(Entity e, Grid g, int attempts) {
-		
+
 		// Generate random position
 		int maxTries = attempts;
-		int[] newDirection = {0,0};
+		int[] newDirection = { 0, 0 };
 		int[] initialPos = e.getPosition();
-		int[] newPos = {0,0};
-		
+		int[] newPos = { 0, 0 };
+
 		int calcCount = 0;
-		
+
 		boolean isValid = false;
 		while (calcCount <= maxTries && !isValid) {
-			System.out.println("Attempt " + calcCount + "/" + maxTries);
-			
+			//System.out.println("Attempt " + calcCount + "/" + maxTries);
+
 			isValid = true;
-			
+
 			// Generate new direction
 			int[] dv = App.generateDirectionVector(1);
 			newDirection[0] = dv[0];
 			newDirection[1] = dv[1];
-			
-			//System.out.println("New direction is: " + newDirection[0] + ", " + newDirection[1]);
-			
+
+			// System.out.println("New direction is: " + newDirection[0] + ", " +
+			// newDirection[1]);
+
 			// Add the direction to the current position
 			newPos[0] = initialPos[0];
 			newPos[1] = initialPos[1];
-			
+
 			newPos[0] += newDirection[0];
 			newPos[1] += newDirection[1];
-			
-			//System.out.println("New Position is: " + newPos[0] + ", " + newPos[1]);
-			
+
+			// System.out.println("New Position is: " + newPos[0] + ", " + newPos[1]);
+
 			// Run checks
-			
+
 			// Check position is valid
 			// Boundary Check
-			if (newPos[0] <= 0 || newPos[0] >= g.getRows()-1 || newPos[1] <= 0 || newPos[1] >= g.getColumns()-1) {
-				//System.out.println("Boundary Check Failed");
+			if (newPos[0] <= 0 || newPos[0] >= g.getRows() - 1 || newPos[1] <= 0 || newPos[1] >= g.getColumns() - 1) {
+				// System.out.println("Boundary Check Failed");
 				isValid = false;
 			}
-			
+
 			// Collision Check with treasure
 			for (Treasure t : treasure) {
 				if (newPos == t.getPosition()) {
-					//System.out.println("Treasure Collision");
+					// System.out.println("Treasure Collision");
 					isValid = false;
 					break;
 				}
 			}
-			
+
 			// Collision Check with villager
 			for (Villager v : villager) {
 				if (newPos == v.getPosition()) {
-					//System.out.println("Villager Collision");
+					// System.out.println("Villager Collision");
 					isValid = false;
 					break;
 				}
 			}
-			
+
 			// Collision Check with enemy
 			for (Enemy en : enemy) {
 				if (newPos == en.getPosition()) {
-					//System.out.println("Enemy Collision");
+					// System.out.println("Enemy Collision");
 					isValid = false;
 					break;
 				}
 			}
-			
+
 			// Check if the position leads to any collisions
 			if (isValid) {
 				break;
 			}
-			
+
 			calcCount++;
-			
+
 		}
-		
+
 		// Move entity
 		e.setPrevPosition(e.getPosition());
 		e.setPosition(newPos);
-		
+
 		// Update map position
 		g.updateTile(e.getPosition(), e);
-		
-		//System.out.println("oldPos: " + e.getPosition()[0] + "," + e.getPosition()[1]);
-		//System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
-		//System.out.println("Move G from: " + e.getPrevPosition()[0] + "," + e.getPrevPosition()[1] + " to: " + e.getPosition()[0] + "," + e.getPosition()[1]);
+
+		// System.out.println("oldPos: " + e.getPosition()[0] + "," +
+		// e.getPosition()[1]);
+		// System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
+		// System.out.println("Move G from: " + e.getPrevPosition()[0] + "," +
+		// e.getPrevPosition()[1] + " to: " + e.getPosition()[0] + "," +
+		// e.getPosition()[1]);
 
 	}
 
