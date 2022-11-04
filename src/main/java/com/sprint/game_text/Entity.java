@@ -10,7 +10,7 @@ public class Entity {
 
 	public Entity(int[] position) {
 		this.position = position;
-		prevPosition = this.position.clone();
+		prevPosition = this.position;
 	}
 
 	public void moveEntity(char dir, Grid grid) {

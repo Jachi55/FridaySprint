@@ -138,7 +138,7 @@ public class App {
 
 						e.moveEntity(eMove, gameGrid);
 					} else {
-						System.out.println("enemy pos: " + e.getPosition()[0] + "," + e.getPosition()[1]);
+						// System.out.println("enemy pos: " + e.getPosition()[0] + "," + e.getPosition()[1]);
 						pathFind(e, player, gameGrid);
 						
 					}
