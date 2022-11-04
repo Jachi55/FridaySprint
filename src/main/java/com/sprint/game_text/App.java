@@ -341,7 +341,7 @@ public class App {
 			
 			// Check if the new position is valid
 			if (App.isPositionValid(newPos, g)) {
-				System.out.println("Pos: (" + newPos[0] + "," + newPos[1] + ") is valid");
+				//System.out.println("Pos: (" + newPos[0] + "," + newPos[1] + ") is valid");
 				
 				// Move entity
 				e.setPrevPosition(e.getPosition());
