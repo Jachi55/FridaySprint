@@ -341,19 +341,23 @@ public class App {
 			
 			// Check if the new position is valid
 			if (App.isPositionValid(newPos, g)) {
+				System.out.println("Pos: (" + newPos[0] + "," + newPos[1] + ") is valid");
+				
+				// Move entity
+				e.setPrevPosition(e.getPosition());
+				e.setPosition(newPos);
+
+				// Update map position
+				g.updateTile(e.getPosition(), e);
+				
+				// Break from loop
 				break;
 			}
 
 			calcCount++;
 
 		}
-
-		// Move entity
-		e.setPrevPosition(e.getPosition());
-		e.setPosition(newPos);
-
-		// Update map position
-		g.updateTile(e.getPosition(), e);
+		
 
 	}
 
