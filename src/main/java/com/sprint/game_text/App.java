@@ -134,7 +134,7 @@ public class App {
 
 						e.moveEntity(eMove, gameGrid);
 					} else {
-						randomMove(e, gameGrid, 5);
+						pathFind(e, player, gameGrid);
 					}
 				}
 				for (Villager v : villager) {
