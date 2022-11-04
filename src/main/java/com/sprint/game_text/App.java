@@ -33,13 +33,13 @@ public class App {
 		
 		
 		System.out.print("How many pieces of treasure would you like to find?\n"
-				+ "Enter a number between: " + "1 and " + maxNumber);
+				+ "Enter a number between: " + "1 and " + maxNumber + " ");
 		noOfTreasure = scanner.nextInt();
 		System.out.print("How many enemies would you like to spawn?\n"
-				+ "Enter a number between: " + "0 and " + (maxNumber - noOfTreasure));
+				+ "Enter a number between: " + "0 and " + (maxNumber - noOfTreasure) + " ");
 		noOfEnemies = scanner.nextInt();
 		System.out.print("How many villagers would you like to spawn?\n"
-				+ "Enter a number between: " + "0 and " + (maxNumber - noOfTreasure - noOfEnemies));
+				+ "Enter a number between: " + "0 and " + (maxNumber - noOfTreasure - noOfEnemies)+ " ");
 		noOfVillagers = scanner.nextInt();
 
 		System.out.print("What is your name? ");
@@ -64,14 +64,18 @@ public class App {
 			char ans = scanner.next().charAt(0);
 			ans = Character.toLowerCase(ans);
 			if (ans == 'y') {
+				boolean gen = false;
+				while(!gen) {
 				int[] ePlayerLocation = generateCoordinates(rows, columns);
-				Enemy playEnemy = new Enemy(ePlayerLocation, true);
-
-				enemy.add(playEnemy);
-				gameGrid.updateTile(playEnemy.getPosition(), playEnemy);
+				if (isPositionValid(ePlayerLocation, gameGrid)) {
+					
+					Enemy ePlayer = new Enemy (ePlayerLocation, true);
+					gameGrid.updateTile(ePlayer.getPosition(), ePlayer);
+				}
+				
 			}
 		}
-
+		}
 
 		spawnTreasure(noOfTreasure, playerLocation, treasure, gameGrid);
 		spawnVillager(noOfVillagers, playerLocation, villager, gameGrid);
@@ -186,7 +190,7 @@ public class App {
 		return absDistance;
 	}
 
-	public static int[] generateDirectionVector(int entityStepSize) {
+	public static int[] generateRandomDirectionVector(int entityStepSize) {
 		// Generate random position
 		int xy_direction;
 		int pm;
@@ -325,17 +329,13 @@ public class App {
 
 		boolean isValid = false;
 		while (calcCount <= maxTries && !isValid) {
-			// System.out.println("Attempt " + calcCount + "/" + maxTries);
 
 			isValid = true;
 
 			// Generate new direction
-			int[] dv = App.generateDirectionVector(1);
+			int[] dv = App.generateRandomDirectionVector(1);
 			newDirection[0] = dv[0];
 			newDirection[1] = dv[1];
-
-			// System.out.println("New direction is: " + newDirection[0] + ", " +
-			// newDirection[1]);
 
 			// Add the direction to the current position
 			newPos[0] = initialPos[0];
@@ -343,67 +343,26 @@ public class App {
 
 			newPos[0] += newDirection[0];
 			newPos[1] += newDirection[1];
-
-			// System.out.println("New Position is: " + newPos[0] + ", " + newPos[1]);
-
-			// Run checks
-			// Check position is valid
-			// Boundary Check
-			if (newPos[0] <= 0 || newPos[0] >= g.getRows()-1 || newPos[1] <= 0 || newPos[1] >= g.getColumns()-1) {
- 				//System.out.println("Boundary Check Failed");
- 				isValid = false;
- 			}
 			
-			// Collision Check with treasure
-			for (Treasure t : treasure) {
-				if (newPos == t.getPosition()) {
-					// System.out.println("Treasure Collision");
-					isValid = false;
-					break;
-				}
-			}
+			// Check if the new position is valid
+			if (App.isPositionValid(newPos, g)) {
+				//System.out.println("Pos: (" + newPos[0] + "," + newPos[1] + ") is valid");
+				
+				// Move entity
+				e.setPrevPosition(e.getPosition());
+				e.setPosition(newPos);
 
-			// Collision Check with villager
-			for (Villager v : villager) {
-				if (newPos == v.getPosition()) {
-					// System.out.println("Villager Collision");
-					isValid = false;
-					break;
-				}
-			}
-
-			// Collision Check with enemy
-			for (Enemy en : enemy) {
-				if (newPos == en.getPosition()) {
-					// System.out.println("Enemy Collision");
-					isValid = false;
-					break;
-				}
-			}
-
-
-			// Check if the position leads to any collisions
-			if (isValid) {
+				// Update map position
+				g.updateTile(e.getPosition(), e);
+				
+				// Break from loop
 				break;
 			}
 
 			calcCount++;
 
 		}
-
-		// Move entity
-		e.setPrevPosition(e.getPosition());
-		e.setPosition(newPos);
-
-		// Update map position
-		g.updateTile(e.getPosition(), e);
-
-		// System.out.println("oldPos: " + e.getPosition()[0] + "," +
-		// e.getPosition()[1]);
-		// System.out.println("newPos: " + newPos[0] + "," + newPos[1]);
-		// System.out.println("Move G from: " + e.getPrevPosition()[0] + "," +
-		// e.getPrevPosition()[1] + " to: " + e.getPosition()[0] + "," +
-		// e.getPosition()[1]);
+		
 
 	}
 
@@ -415,7 +374,7 @@ public class App {
 		while (i < noOfObjects) {
 			location = generateCoordinates(grid.getRows(), grid.getColumns());
 
-			while (Arrays.equals(playerLocation, location)) {
+			while (!isPositionValid(location, grid)) {
 				location = generateCoordinates(grid.getRows(), grid.getColumns());
 			}
 			e.add(new Enemy(location));
@@ -430,7 +389,7 @@ public class App {
 		while (i < noOfObjects) {
 			location = generateCoordinates(grid.getRows(), grid.getColumns());
 
-			while (Arrays.equals(playerLocation, location)) {
+			while (!isPositionValid(location, grid)) {
 				location = generateCoordinates(grid.getRows(), grid.getColumns());
 			}
 			e.add(new Treasure(location));
@@ -445,7 +404,7 @@ public class App {
 		while (i < noOfObjects) {
 			location = generateCoordinates(grid.getRows(), grid.getColumns());
 
-			while (Arrays.equals(playerLocation, location)) {
+			while (!isPositionValid(location, grid)) {
 				location = generateCoordinates(grid.getRows(), grid.getColumns());
 			}
 			e.add(new Villager(location));
